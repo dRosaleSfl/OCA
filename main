@@ -7,48 +7,16 @@ using namespace std;
 class game
 {
 	private:
-		int tablero [62];
-		bool turn;
 		bool active;
 	public:
 		game ()
 		{
 			active = true;
-			turn = true;
-			for (int i = 0; i < 62; i++)
-			{
-				tablero [i] = (i+1);
-			}
-		}
-		
-		void shw ()
-		{
-			for (int i = 0; i < 62; i++)
-			{
-				cout << tablero [i] << endl;
-			}
-		}
-		
-		bool getturn ()
-		{
-			return turn;
 		}
 		
 		bool getactive ()
 		{
 			return active;
-		}
-		
-		void changeturn ()
-		{
-			if (turn == true)
-			{
-				turn = false;
-			}
-			else
-			{
-				turn = true;
-			}
 		}
 		
 		void won ()
@@ -92,7 +60,6 @@ class plyr : public game
 				}
 			}
 			cout << posicion << endl;
-			changeturn ();
 			if (posicion == 63)
 			{
 				cout << "Llegando en la meta espacio 63";
@@ -119,7 +86,7 @@ int main ()
 	do 
 	{
 		j1.diceroll (dice (), &oca );
-		j2.diceroll (dice (), &oca );
-	} while (oca.getactive () == true);
-	
+		if (oca.getactive () == true)
+			j2.diceroll (dice (), &oca );
+	} while (oca.getactive () == true);	
 }
