@@ -1,0 +1,125 @@
+#include <iostream>
+#include <stdlib.h>
+#include <time.h>
+
+using namespace std;
+
+class game
+{
+	private:
+		int tablero [62];
+		bool turn;
+		bool active;
+	public:
+		game ()
+		{
+			active = true;
+			turn = true;
+			for (int i = 0; i < 62; i++)
+			{
+				tablero [i] = (i+1);
+			}
+		}
+		
+		void shw ()
+		{
+			for (int i = 0; i < 62; i++)
+			{
+				cout << tablero [i] << endl;
+			}
+		}
+		
+		bool getturn ()
+		{
+			return turn;
+		}
+		
+		bool getactive ()
+		{
+			return active;
+		}
+		
+		void changeturn ()
+		{
+			if (turn == true)
+			{
+				turn = false;
+			}
+			else
+			{
+				turn = true;
+			}
+		}
+		
+		void won ()
+		{
+			active = false;	
+		}
+		
+//		void check
+};
+
+class plyr : public game
+{
+	private:
+		int posicion;
+		string nombre;
+	public:
+		plyr (string nombre)
+		{
+			this -> nombre = nombre;
+			posicion = 1;
+		}
+		
+		string getname ()
+		{
+			return nombre;
+		}
+		
+		void diceroll (int up, game *oca)
+		{
+			int temp = 63;
+			cout << nombre << " saco un " << up << " fue de la posicion " << posicion << " a ";
+			for (int i = 1; i <= up; i++)
+			{
+				if (posicion < 63)
+				{
+					posicion = posicion + i;
+				}
+				else
+				{
+					posicion = posicion - i;
+				}
+			}
+			cout << posicion << endl;
+			changeturn ();
+			if (posicion == 63)
+			{
+				cout << "Llegando en la meta espacio 63";
+				oca -> won();
+			}
+			cout << endl;
+		}
+};
+
+
+
+int dice ()
+{
+	int v;
+	v = (rand() % 6) + 1;
+}
+
+int main ()
+{
+	srand (time (NULL) );
+	game oca;
+	plyr j1 ("Daniel"), j2 ("Ivan");
+	cout << j1.getname () << " vs " << j2.getname () << endl;
+	do 
+	{
+		j1.diceroll (dice (), &oca );
+		j2.diceroll (dice (), &oca );
+	} while (oca.getactive () == true);
+	
+}
