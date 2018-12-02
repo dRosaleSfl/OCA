@@ -1,0 +1,155 @@
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
+#include <cstdlib>
+
+using namespace sf;
+
+class board
+{
+	private:
+		bool GameON;
+	public:
+		board ()
+		{
+			GameON = true;
+		}
+};
+
+class plyr
+{
+	
+};
+/*
+class Dice
+{
+	private:
+		Texture one, two, three, four, five, six;
+	public:
+		Dice ()
+		{
+			if (!one.loadFromFile("one.jpg"))
+    		{
+    			system ("Error al cargar textura one.jpg");
+			}
+			if (!two.loadFromFile("two.jpg"))
+    		{
+    			system ("Error al cargar textura two.jpg");
+			}
+			if (!three.loadFromFile("tree.jpg"))
+    		{
+    			system ("Error al cargar textura three.jpg");
+			}
+			if (!four.loadFromFile("four.jpg"))
+    		{
+    			system ("Error al cargar textura four.jpg");
+			}
+			if (!five.loadFromFile("five.jpg"))
+    		{
+    			system ("Error al cargar textura five.jpg");
+			}
+			if (!six.loadFromFile("six.jpg"))
+    		{
+    			system ("Error al cargar textura six.jpg");
+			}
+		}
+		
+		Sprite returndice (int opc)
+		{
+			Sprite *face;
+			switch (opc)
+			{
+				case 1:
+					face = new Sprite (one);
+					*face -> setPosition (100,200);
+					return *face;
+				break;
+				
+				case 2:
+					face = new Sprite (two);
+					return *face;
+				break;
+				
+				case 3:
+					face = new Sprite (three);
+					return *face;
+				break;
+				
+				case 4:
+					face = new Sprite (four);
+					return *face;
+				break;
+				
+				case 5:
+					face = new Sprite (five);
+					return *face;
+				break;
+				
+				case 6:
+					face = new Sprite (six);
+					return *face;
+				break;
+				
+				default:
+					
+				break;
+			}
+		}
+}; */
+
+int main()
+{
+	int face = 1;
+    // Create the main window
+    RenderWindow window(VideoMode(800, 600), "Doctor Who");
+    // Load a sprite to display
+    Texture texture;
+//  Dice dice;
+    if (!texture.loadFromFile("GameBoard.jpg"))
+    {
+    	system ("Error al cargar textura");
+        return EXIT_FAILURE;
+	}
+    Sprite sprite(texture);
+    // Create a graphical text to display
+    Font font;
+    if (!font.loadFromFile("stocky.ttf"))
+    {
+    	system ("Error al cargar fuente");
+    	return EXIT_FAILURE;
+	}
+        
+    Text text("La Oca", font, 15);
+    text.setPosition (360, 420);
+    // Load a music to play
+    Music music;
+    if (!music.openFromFile("ImTheDoctor.ogg"))
+    {
+    	system ("Error al cargar cancion");
+    	return EXIT_FAILURE;
+	}
+    // Play the music
+    music.play();
+    // Start the game loop
+    while (window.isOpen())
+    {
+        // Process events
+        Event event;
+        while (window.pollEvent(event))
+        {
+            // Close window: exit
+            if (event.type == Event::Closed)
+                window.close();
+        }
+        // Clear screen
+        window.clear();
+        // Draw the sprite
+        window.draw(sprite);
+        // Draw the string
+        window.draw(text);
+        // Update the window
+        window.display();
+ //       window.draw (dice.returndice (face));
+    }
+    
+    return EXIT_SUCCESS; 
+}
