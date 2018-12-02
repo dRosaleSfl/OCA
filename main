@@ -1,65 +1,155 @@
-#include <iostream>
-#include <stdlib.h>
-#include <time.h>
+#include <SFML/Audio.hpp>
+#include <SFML/Graphics.hpp>
+#include <cstdlib>
 
-using namespace std;
+using namespace sf;
 
-class game
+class board
 {
 	private:
-		bool active;
+		bool GameON;
 	public:
-		game ()
+		board ()
 		{
-			active = true;
-		}
-		
-		bool getactive ()
-		{
-			return active;
-		}
-		
-		void won ()
-		{
-			active = false;
+			GameON = true;
 		}
 };
 
-class plyr : public game
+class plyr
+{
+	
+};
+/*
+class Dice
 {
 	private:
-		int posicion;
-		string nombre;
+		Texture one, two, three, four, five, six;
 	public:
-		plyr (string nombre)
+		Dice ()
 		{
-			this -> nombre = nombre;
-			posicion = 1;
+			if (!one.loadFromFile("one.jpg"))
+    		{
+    			system ("Error al cargar textura one.jpg");
+			}
+			if (!two.loadFromFile("two.jpg"))
+    		{
+    			system ("Error al cargar textura two.jpg");
+			}
+			if (!three.loadFromFile("tree.jpg"))
+    		{
+    			system ("Error al cargar textura three.jpg");
+			}
+			if (!four.loadFromFile("four.jpg"))
+    		{
+    			system ("Error al cargar textura four.jpg");
+			}
+			if (!five.loadFromFile("five.jpg"))
+    		{
+    			system ("Error al cargar textura five.jpg");
+			}
+			if (!six.loadFromFile("six.jpg"))
+    		{
+    			system ("Error al cargar textura six.jpg");
+			}
 		}
 		
-		string getname ()
+		Sprite returndice (int opc)
 		{
-			return nombre;
-		}
-		
-		void diceroll (int up, game *oca)
-		{
-			int temp = 63, temp2 = 63;
-			cout << nombre << " saco un " << up << " fue de la posicion " << posicion << " a ";
-			posicion = posicion + up;
-			if (posicion > 63)
+			Sprite *face;
+			switch (opc)
 			{
-				cout << "SE HA PASADO";
-				temp = posicion - temp;
-				cout << " POR " << temp << " ESPACIOS ";
-				posicion = 63 - temp ;
+				case 1:
+					face = new Sprite (one);
+					*face -> setPosition (100,200);
+					return *face;
+				break;
+				
+				case 2:
+					face = new Sprite (two);
+					return *face;
+				break;
+				
+				case 3:
+					face = new Sprite (three);
+					return *face;
+				break;
+				
+				case 4:
+					face = new Sprite (four);
+					return *face;
+				break;
+				
+				case 5:
+					face = new Sprite (five);
+					return *face;
+				break;
+				
+				case 6:
+					face = new Sprite (six);
+					return *face;
+				break;
+				
+				default:
+					
+				break;
 			}
-			cout << posicion << endl;
-			if (posicion == 63)
-			{
-				cout << endl << endl << nombre << " AH GANADO" << endl << endl;
-				oca -> won();
-			}
-			cout << endl;
 		}
-};
+}; */
+
+int main()
+{
+	int face = 1;
+    // Create the main window
+    RenderWindow window(VideoMode(800, 600), "Doctor Who");
+    // Load a sprite to display
+    Texture texture;
+//  Dice dice;
+    if (!texture.loadFromFile("GameBoard.jpg"))
+    {
+    	system ("Error al cargar textura");
+        return EXIT_FAILURE;
+	}
+    Sprite sprite(texture);
+    // Create a graphical text to display
+    Font font;
+    if (!font.loadFromFile("stocky.ttf"))
+    {
+    	system ("Error al cargar fuente");
+    	return EXIT_FAILURE;
+	}
+        
+    Text text("La Oca", font, 15);
+    text.setPosition (360, 420);
+    // Load a music to play
+    Music music;
+    if (!music.openFromFile("ImTheDoctor.ogg"))
+    {
+    	system ("Error al cargar cancion");
+    	return EXIT_FAILURE;
+	}
+    // Play the music
+    music.play();
+    // Start the game loop
+    while (window.isOpen())
+    {
+        // Process events
+        Event event;
+        while (window.pollEvent(event))
+        {
+            // Close window: exit
+            if (event.type == Event::Closed)
+                window.close();
+        }
+        // Clear screen
+        window.clear();
+        // Draw the sprite
+        window.draw(sprite);
+        // Draw the string
+        window.draw(text);
+        // Update the window
+        window.display();
+ //       window.draw (dice.returndice (face));
+    }
+    
+    return EXIT_SUCCESS; 
+}
